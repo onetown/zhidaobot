@@ -1,0 +1,7 @@
+div.topbar form#zendesk_search {
+  margin-top: 6px;
+}
+
+ul.options input[type=radio], ul.options input[type=checkbox] {
+    margin:0 5px 0 0;
+}

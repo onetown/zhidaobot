@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+	<head>
+		<title>好啦中文网</title>
+                <link href="http://s.twimg.com/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+                <style type="text/css">
+                  * { margin: 0; padding: 0; border: 0; }
+                  body { background: #eee; color: #999; border-top: 5px solid #5C9FC0; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; }
+                  body a { text-decoration: none; color: #5C9FC0;}
+				  body a:hover { text-decoration: underline; }
+				  input {background:#EEEEEE; border:1px solid #6699CC;height:30px; line-hight:30px;}
+                  #main a.bird { border: 0; position: absolute; margin-top: -65px; margin-left: 402px; }
+                  #main { background: #fff; width: 540px; margin: 100px auto; clear: both; padding: 32px 40px; font-weight: 300; font-size: 24px; line-height: 30px; -webkit-box-shadow: 0 1px 2px #ccc; -moz-box-shadow: 0 1px 2px #ccc; box-shadow: 0 1px 2px #ccc; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; color: #666; }
+                  #main a { color: #224466; }
+                  #main p { padding-bottom: 14px; }
+                  #main a.back,
+                  #main a.more { font-weight: normal; font-size: 14px; -webkit-border-radius: 16px; -moz-border-radius: 16px; border-radius: 16px; background: #333; color: #fff; padding: 5px 12px; }
+                  #main a.back { background: #224466; }
+                  #main a.more { background: #5C9FC0; }
+                  #main a.back:hover { text-decoration: none; -webkit-box-shadow: 0 0 3px #5C9FC0, 0 0 6px #5C9FC0; }
+				  #main a.more:hover { text-decoration: none; -webkit-box-shadow: 0 0 3px #9BC4D8, 0 0 6px #9BC4D8; }
+				  #main ul {list-style:none;}
+				  .keys {float:left; width:180px;display:block; height:22px;}
+				  .keys a {font-size:12px;}
+				  .clear {clear:both;}
+                  div.footer { margin: 20px auto; clear: both; display: block; width: 880px; list-style-type: none; border-top: 1px solid #fff; -webkit-box-shadow: 0 -1px 0 #ddd; -moz-box-shadow: 0 -1px 0 #ddd; box-shadow: 0 -1px 0 #ddd; padding: 20px 0; text-align: center; }
+                  div.footer  a, div.footer span { margin: 0 20px 0 0; font-size: 11px; }
+                </style>
+	</head>
+	<body>
+		
+		<div id="main">
+			<a href="/" class="bird"><!--<img src="/static/images/bird.png" alt="Twitter"/>-->好啦 HAOLA.CC</a>
+			<p>
+			<input type="text" name="keyword" id="keyword" size="90" />
+			<a class="back" href="/search">搜索</a>
+			</p>
+
+		<!--<a class="more" href="http://help.twitter.com/entries/109623">搜索更多</a>-->
+		<p>
+		<ul>
+			{%for k in rkeys%}
+			<li class="keys"><a href="/s/{{k}}">{{k}}</a></li>
+			{%end%}
+			<li class="clear"></li>
+		</ul>
+		
+		</p>
+		</div>
+		
+		<div class="footer">
+      <span>&copy; 2011 haola.cc</span>
+      <a href="/about">关于我们</a></li>
+      <a href="/about/contact">联系我们</a></li>
+      <a href="/privacy">免责声明</a>
+    </div>
+		
+
+	</body>
+</html>

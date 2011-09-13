@@ -1,0 +1,10 @@
+div.row {
+  width: 960px;
+}
+div.sidebar {
+  margin-left: -20px;
+}
+
+div#topbar a#logo span {
+  margin-top: 1px;
+}

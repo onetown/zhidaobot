@@ -1,0 +1,14 @@
+{%extends "root.html"%}
+
+{%block body%}
+
+	{%for l in list%}
+	<div>
+		<a href="/q/#" target="_blank">{{l["title"]}}</a>
+		<p>
+			{{l["description"]}}
+		</p>
+	</div>
+	{%end%}
+
+{%end%}
