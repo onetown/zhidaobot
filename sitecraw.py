@@ -25,6 +25,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", HomeHandler),
             (r"/s/([^/]+)", SearchHandler),
+            (r"/q/([^/]+)", QuestionHandler)
         ]
         settings = dict(
             debug = True,
@@ -46,6 +47,41 @@ class HomeHandler(BaseHandler):
             rand_keys.append(static_keywords[r])
             
         self.render("index.html", rkeys = rand_keys)
+
+class QuestionHandler(BaseHandler):
+    @tornado.web.asynchronous
+    def get(self,qnumber=None):
+        if not qnumber:
+            self.redirect("/")
+        else:
+            baidu = "http://zhidao.baidu.com/question/"+ qnumber +".html"
+            hc = tornado.httpclient.AsyncHTTPClient()
+            hc.fetch(baidu, self._on_load)
+
+    def _on_load(self,resp):
+        offset1 = resp.body.find("<div id=\"body\"")
+        offset2 = resp.body.find("<div id=\"footer\"")
+        body = "<html><body>" + resp.body[offset1:offset2] + "</body></html>"
+        try:
+            body = body.decode('gbk')
+        except:
+            pass
+        try:
+            question = self._parse(body)
+            self.render("question.html",q=question)
+        except:
+            self.render("error.html")
+
+    def _parse(self, body):
+        q = {}
+        doc = HTML.fromstring(body)
+        qbox = doc.xpath("//*[@id=\"question-box\"]")[0]
+        qtitle = qbox.xpath(".//h1[@id='question-title']//span")[1]
+        qbody = qbox.xpath(".//pre[@id=\"question-content\"]")[0]
+        q["title"] = qtitle.text_content()
+        q["body"] = qbody.text_content()
+        return q
+
 
 class SearchHandler(BaseHandler):
     @tornado.web.asynchronous
@@ -79,23 +115,10 @@ class SearchHandler(BaseHandler):
             try:
                 cells = t.xpath(".//td[@class='f']")[0].getchildren()
                 link = cells[0].items()[0][1]
+                qnumber = link.replace('/question/','').split('.')[0]
                 title = cells[0].text_content()
-                '''try:
-                    title = title.decode("gbk")
-                except:
-                    try:
-                        title = "".join([chr(ord(c)) for c in title]).decode("gbk")
-                    except:
-                        pass'''
                 short = cells[2].text_content()
-                '''try:
-                    short = short.decode("gbk")
-                except:
-                    try:
-                        short = "".join([chr(ord(c)) for c in short]).decode("gb2312")
-                    except:
-                        pass'''
-                tk = dict(title=title, link=link, description=short)
+                tk = dict(title=title, link=link, description=short,qnumber=qnumber)
                 list.append(tk)
             except Exception,e:
                 logging.error("can not parse this record : %s",e)
