@@ -63,34 +63,38 @@ class SearchHandler(BaseHandler):
         offset1 = resp.body.find("<table border=0 cellpadding=0 cellspacing=0><tr><td class=f>")
         offset2 = resp.body.find("<span id=\"mingren_icon\"")
         body = "<html><body>" + resp.body[offset1:offset2] + "</body></html>"
+        try:
+            body = body.decode('gbk')
+        except:
+            pass
         list = self._parse(body)
         self.render("search.html", list=list,keyword=self.keyword)
 
     def _parse(self,document):
         list = []
         alist = []
-        doc = HTML.document_fromstring(document)
+        doc = HTML.fromstring(document)
         result = doc.xpath("/html/body/table")
         for t in result:
             try:
                 cells = t.xpath(".//td[@class='f']")[0].getchildren()
                 link = cells[0].items()[0][1]
                 title = cells[0].text_content()
-                try:
+                '''try:
                     title = title.decode("gbk")
                 except:
                     try:
                         title = "".join([chr(ord(c)) for c in title]).decode("gbk")
                     except:
-                        pass
+                        pass'''
                 short = cells[2].text_content()
-                try:
+                '''try:
                     short = short.decode("gbk")
                 except:
                     try:
-                        short = "".join([chr(ord(c)) for c in short]).decode("gbk")
+                        short = "".join([chr(ord(c)) for c in short]).decode("gb2312")
                     except:
-                        pass
+                        pass'''
                 tk = dict(title=title, link=link, description=short)
                 list.append(tk)
             except Exception,e:
