@@ -3264,7 +3264,7 @@ div.question h2 {
 
 div.question h3 {
 	padding:1px 5px 6px 1px;
-	border-bottom:1px solid green;
+	border-bottom:1px solid #ccc;
 }
 
 div.question p {

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<!-- Update your html tag to include the itemscope and itemtype attributes -->
+<html itemscope itemtype="http://schema.org/Knowledge">
 <head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<!-- Add the following three tags inside head -->
+<meta itemprop="name" content="好啦中文网">
+<meta itemprop="description" content="好啦中文网解决您的问题"> 
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
   <meta content="en-us" http-equiv="Content-Language"/>
   <meta content="Twitter is without a doubt the best way to share and discover what is happening right now." name="description"/>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, width=device-width" />
@@ -14,7 +18,7 @@
   <link href="/iefavicon.ico" rel="shortcut icon" type="image/x-icon" />
   <![endif]-->
 
-  <title>好啦中文网 </title>
+  <title> {%if handler.title%}{{handler.title}} - {%end%}好啦中文网</title>
 
 
   <link href="{{static_url("haola.css")}}" media="screen" rel="stylesheet" type="text/css" />
@@ -49,8 +53,20 @@
 <form action="/" id="helpcenter_search" method="get" page="1">    <span class="glass left"><i></i></span>
     <input id="query" name="keyword" placeholder="" type="text" />
 </form></div>
+<!-- Place this tag where you want the +1 button to render -->
+<!-- Place this tag where you want the +1 button to render -->
+<g:plusone size="medium" annotation="inline"></g:plusone>
 
+<!-- Place this render call where appropriate -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'zh-CN'};
 
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
    
       </div> <!-- /fixed-container -->
     </div> <!-- /topbar-inner -->

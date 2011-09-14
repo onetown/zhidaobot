@@ -35,6 +35,9 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
 class BaseHandler(tornado.web.RequestHandler):
+    def prepare(self):
+        self.title = None
+
     def get_current_user(self):
         return None
 
@@ -87,6 +90,7 @@ class QuestionHandler(BaseHandler):
         qbody = qbox.xpath(".//*[@id=\"question-content\"]")[0]
         #get question
         q["title"] = qtitle.text_content()
+        self.title = q["title"]
         q["body"] = qbody.text_content()
 
         anwsers = [None,None] #0 best anwser, 1 recommended anwser, 2-more other anwser
@@ -122,6 +126,7 @@ class SearchHandler(BaseHandler):
             self.redirect("/")
         else:
             self.keyword = keyword
+            self.title = keyword
             baidu = "http://zhidao.baidu.com/q?word=" + tornado.escape.url_escape(keyword) + "&ct=17&pn=0&tn=ikaslist&rn=10&lm=0"
             hc = tornado.httpclient.AsyncHTTPClient()
             hc.fetch(baidu, self._on_load)
