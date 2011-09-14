@@ -75,7 +75,7 @@ class QuestionHandler(BaseHandler):
             self.render("question.html",q=question)
         except Exception,e:
             self.write(body)
-            #print e
+            print e
             #self.render("error.html")
             self.finish()
 
@@ -88,6 +88,29 @@ class QuestionHandler(BaseHandler):
         #get question
         q["title"] = qtitle.text_content()
         q["body"] = qbody.text_content()
+
+        anwsers = [None,None] #0 best anwser, 1 recommended anwser, 2-more other anwser
+        '''get best anwser'''
+        bae = doc.xpath("//*[@id='best-answer-panel']")
+        if bae:
+            ba = bae[0].xpath(".//*[@class='content']")[0]
+            ba = HTML.tostring(ba,encoding="utf-8")
+            anwsers[0] = ba
+
+        '''get recommended anwser'''
+        rae = doc.xpath("//*[@id='recommend-answer-panel']")
+        if rae:
+            ra = rae[0].xpath(".//*[@class='content']")[0]
+            ra = HTML.tostring(ra,encoding="utf-8")
+            anwsers[1] = ra
+
+        '''get other anwsers'''
+        oae = doc.xpath("//*[@id='reply-panel']")
+        if oae:
+            aes = oae[0].xpath(".//*[@class='content']")
+            for aei in aes:
+                anwsers.append(HTML.tostring(aei,encoding="utf-8"))
+        q["anwsers"] = anwsers
         return q
 
 

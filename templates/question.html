@@ -3,7 +3,36 @@
 <div class="question">
 	<h2>{{q["title"]}}</h2>
 	<div class="question-body">
-		<pre>{{q["body"]}}</pre>
+		{%if q["body"].strip() <> ""%}
+		<p>{{q["body"]}}</p>
+		{%end%}
 	</div>
 </div>
+
+<div class="question" style="margin-top:40px;">
+	<h3>答案</h3>
+</div>
+
+{%if q["anwsers"][0]%}
+<div class="question best-anwser">
+	{% raw q["anwsers"][0]%}
+</div>
+{%end%}
+
+
+{%if q["anwsers"][1]%}
+<div class="question recommended">
+	{% raw q["anwsers"][1]%}
+</div>
+{%end%}
+
+
+{%for i in range(2,len(q["anwsers"]))%}
+<div class="question anwsers">
+	{% raw q["anwsers"][i]%}
+</div>
+{%end%}
+
+
+
 {%end%}

@@ -3256,3 +3256,41 @@ div.contentpage a{
 	color:#003366;
 	text-decoration:underline;
 }
+
+div.question h2 {
+	padding:1px 5px 6px 1px;
+	border-bottom:1px solid #c0c0c0;
+}
+
+div.question h3 {
+	padding:1px 5px 6px 1px;
+	border-bottom:1px solid green;
+}
+
+div.question p {
+	padding-left: 10px;
+	font-size:16px;
+}
+
+div.question pre {
+	max-width:650px;
+	font-size:16px;
+	line-height:25px;
+	color:#555;
+	padding:10px 10px 10px 10px;
+	white-space:pre-wrap;
+	white-space:-moz-pre-wrap;
+	white-space:-pre-wrap;
+	white-space:-o-pre-wrap;
+	word-wrap:break-word;
+	background:transparent;
+}
+
+
+div.best-anwser {
+	background-color:#FFF0F6;
+}
+
+div.recommended pre {
+	background:#F0FFF8;
+}
