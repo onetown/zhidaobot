@@ -69,15 +69,19 @@ class QuestionHandler(BaseHandler):
         try:
             question = self._parse(body)
             self.render("question.html",q=question)
-        except:
-            self.render("error.html")
+        except Exception,e:
+            self.write(body)
+            #print e
+            #self.render("error.html")
+            self.finish()
 
     def _parse(self, body):
         q = {}
         doc = HTML.fromstring(body)
         qbox = doc.xpath("//*[@id=\"question-box\"]")[0]
         qtitle = qbox.xpath(".//h1[@id='question-title']//span")[1]
-        qbody = qbox.xpath(".//pre[@id=\"question-content\"]")[0]
+        qbody = qbox.xpath(".//*[@id=\"question-content\"]")[0]
+        #get question
         q["title"] = qtitle.text_content()
         q["body"] = qbody.text_content()
         return q
@@ -116,8 +120,11 @@ class SearchHandler(BaseHandler):
                 cells = t.xpath(".//td[@class='f']")[0].getchildren()
                 link = cells[0].items()[0][1]
                 qnumber = link.replace('/question/','').split('.')[0]
-                title = cells[0].text_content()
-                short = cells[2].text_content()
+                title = cells[0]
+                title.set("href","/q/" + qnumber)
+                title = HTML.tostring(cells[0],encoding="utf-8")
+                print cells[0]
+                short = HTML.tostring(cells[2],encoding="utf-8")
                 tk = dict(title=title, link=link, description=short,qnumber=qnumber)
                 list.append(tk)
             except Exception,e:

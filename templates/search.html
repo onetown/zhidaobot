@@ -4,9 +4,9 @@
 
 	{%for l in list%}
 	<div>
-		<a href="/q/{{l["qnumber"]}}" target="_blank">{{l["title"]}}</a>
+		{% raw l["title"] %}
 		<p>
-			{{l["description"]}}
+			{% raw l["description"]%}
 		</p>
 	</div>
 	{%end%}
