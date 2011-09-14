@@ -8,14 +8,14 @@
                   body { background: #eee; color: #999; border-top: 5px solid #5C9FC0; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; }
                   body a { text-decoration: none; color: #5C9FC0;}
 				  body a:hover { text-decoration: underline; }
-				  input {background:#EEEEEE; border:1px solid #6699CC;height:30px; line-hight:30px;}
+				  input {background:#EEEEEE; border:1px solid #6699CC;height:30px; line-hight:30px;width:450px;font-size:14px;padding:2px 5px 2px 5px;font-weight:bold;}
                   #main a.bird { border: 0; position: absolute; margin-top: -65px; margin-left: 402px; }
                   #main { background: #fff; width: 540px; margin: 100px auto; clear: both; padding: 32px 40px; font-weight: 300; font-size: 24px; line-height: 30px; -webkit-box-shadow: 0 1px 2px #ccc; -moz-box-shadow: 0 1px 2px #ccc; box-shadow: 0 1px 2px #ccc; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; color: #666; }
-                  #main a { color: #224466; }
+				  #main a { color: #224466; }
                   #main p { padding-bottom: 14px; }
-                  #main a.back,
+                  #main a.back, #main button.back,
                   #main a.more { font-weight: normal; font-size: 14px; -webkit-border-radius: 16px; -moz-border-radius: 16px; border-radius: 16px; background: #333; color: #fff; padding: 5px 12px; }
-                  #main a.back { background: #224466; }
+                  #main a.back, #main button.back { background: #224466; }
                   #main a.more { background: #5C9FC0; }
                   #main a.back:hover { text-decoration: none; -webkit-box-shadow: 0 0 3px #5C9FC0, 0 0 6px #5C9FC0; }
 				  #main a.more:hover { text-decoration: none; -webkit-box-shadow: 0 0 3px #9BC4D8, 0 0 6px #9BC4D8; }
@@ -31,9 +31,9 @@
 		
 		<div id="main">
 			<a href="/" class="bird"><!--<img src="/static/images/bird.png" alt="Twitter"/>-->好啦 HAOLA.CC</a>
-			<p>
-			<input type="text" name="keyword" id="keyword" size="90" />
-			<a class="back" href="/search">搜索</a>
+			<p><form method="get"><input type="text" name="keyword" id="keyword" />
+			<button class="back" type="submit">好啦</button></form>
+
 			</p>
 
 		<!--<a class="more" href="http://help.twitter.com/entries/109623">搜索更多</a>-->

@@ -40,6 +40,10 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class HomeHandler(BaseHandler):
     def get(self):
+        kq = self.get_argument("keyword","")
+        if kq and kq <> "":
+            self.redirect("/s/" + kq)
+            return
         global static_keywords
         rand_keys = []
         for i in range(60):
@@ -123,7 +127,6 @@ class SearchHandler(BaseHandler):
                 title = cells[0]
                 title.set("href","/q/" + qnumber)
                 title = HTML.tostring(cells[0],encoding="utf-8")
-                print cells[0]
                 short = HTML.tostring(cells[2],encoding="utf-8")
                 tk = dict(title=title, link=link, description=short,qnumber=qnumber)
                 list.append(tk)
