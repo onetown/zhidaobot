@@ -3248,6 +3248,14 @@ div.rightbar {
 	float:right;
 }
 
+div.rightbar ul{
+	list-style:none;
+}
+div.rightbar ul li{
+	margin-left:-30px;
+	line-height:22px;
+}
+
 div.contentpage {
 	width:600px;
 }

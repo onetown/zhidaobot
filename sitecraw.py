@@ -66,6 +66,11 @@ class QuestionHandler(BaseHandler):
             hc.fetch(baidu, self._on_load)
 
     def _on_load(self,resp):
+        global static_keywords
+        rand_keys = []
+        for i in range(20):
+            r = random.randint(0,len(static_keywords))
+            rand_keys.append(static_keywords[r])
         offset1 = resp.body.find("<div id=\"body\"")
         offset2 = resp.body.find("<div id=\"footer\"")
         body = "<html><body>" + resp.body[offset1:offset2] + "</body></html>"
@@ -75,7 +80,7 @@ class QuestionHandler(BaseHandler):
             pass
         try:
             question = self._parse(body)
-            self.render("question.html",q=question)
+            self.render("question.html",q=question, rkeys = rand_keys)
         except Exception,e:
             self.write(body)
             print e
@@ -139,8 +144,14 @@ class SearchHandler(BaseHandler):
             body = body.decode('gbk')
         except:
             pass
-        list = self._parse(body)
-        self.render("search.html", list=list,keyword=self.keyword)
+        list,table = self._parse(body)
+        global static_keywords
+        rand_keys = []
+        for i in range(20):
+            r = random.randint(0,len(static_keywords))
+            rand_keys.append(static_keywords[r])
+
+        self.render("search.html", list=list,keyword=self.keyword, rkeys = rand_keys, rtable = table)
 
     def _parse(self,document):
         list = []
@@ -162,7 +173,16 @@ class SearchHandler(BaseHandler):
                 logging.error("can not parse this record : %s",e)
         while list:
             alist.append(list.pop(random.randrange(len(list))))
-        return alist
+
+        '''parse relation questions'''
+        result = doc.xpath("//td[@class='f14']")
+        rtable = None
+        if result:
+            try:
+                rtable = HTML.tostring(result[0].getparent().getparent().getparent(),encoding="utf-8")
+            except:
+                pass
+        return alist, rtable
 
 
 

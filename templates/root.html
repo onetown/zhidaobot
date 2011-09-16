@@ -7,8 +7,8 @@
 <meta itemprop="description" content="好啦中文网解决您的问题"> 
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
   <meta content="en-us" http-equiv="Content-Language"/>
-  <meta content="Twitter is without a doubt the best way to share and discover what is happening right now." name="description"/>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, width=device-width" />
+  <meta name="keywords" content="haola.cc,搜搜,问问,健康,滋味,八卦, {%if handler.title%}{{handler.title}}{%end%}" />
   <!--[if IE 7]>
   <meta name="viewport" content="initial-scale=1.0, width=1024px"/>
   <![endif]-->
@@ -80,6 +80,13 @@
   <div id="support_content">
 
 	  <div class="rightbar">
+		  <ul>
+			  <li><h3>热门搜索</h3></li>
+			  {%for k in rkeys%}
+			  <li><a href="/s/{{k}}">{{k}}</a></li>
+			  {%end%}
+		  </ul>
+
 	  <script type="text/javascript"><!--
 	google_ad_client = "ca-pub-9172306856089881";
 google_ad_slot = "9321884215";
@@ -95,6 +102,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	  <div class="contentpage" style="min-height:600px;">
 		{%block body%}{%end%}
 	</div>
+	<div style="clear:both"></div>
 
 
 
