@@ -182,7 +182,13 @@ class SearchHandler(BaseHandler):
             for rt in result:
                 a = rt.getchildren()[0]
                 a.set("href","/s/" + a.text_content())
-                static_keywords.append(a.text_content())
+                kindex = -1
+                try:
+                    kindex = static_keywords.index(a.text_content())
+                except:
+                    pass
+                if kindex == -1:
+                    static_keywords.append(a.text_content())
             try:
                 rtable = HTML.tostring(result[0].getparent().getparent().getparent(),encoding="utf-8")
             except:

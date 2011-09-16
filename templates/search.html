@@ -13,9 +13,9 @@ google_ad_height = 60;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 	{%for l in list%}
-	<div>
-		{% raw l["title"] %}
-		<p>
+	<div style="margin-bottom:10px;">
+		<h3>{% raw l["title"] %}</h3>
+		<p style="padding:5px 5px 5px 5px;font-size:16px;">
 			{% raw l["description"]%}
 		</p>
 	</div>
