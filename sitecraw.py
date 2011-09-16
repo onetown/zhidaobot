@@ -178,6 +178,9 @@ class SearchHandler(BaseHandler):
         result = doc.xpath("//td[@class='f14']")
         rtable = None
         if result:
+            for rt in result:
+                a = rt.getchildren()[0]
+                a.set("href","/s/" + a.text_content())
             try:
                 rtable = HTML.tostring(result[0].getparent().getparent().getparent(),encoding="utf-8")
             except:
