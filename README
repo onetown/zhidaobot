@@ -1,2 +1,18 @@
 A baidu zhidao site bot, use python + tornado
 demo site: http://haola.cc
+
+How to install:
+	1. python 2.6 is the minimal requirement. 
+	2. to install python extra module, the best way is use setup tools. http://pypi.python.org/pypi/setuptools
+	3. python lxml2 module
+		sudo easy_install lxml 
+		it needs libxml2 and libxslt, to instal these libraries, you can use yum or apt-get, for example: yum install libxml2-devel
+
+How to run:
+	1. chmod 755 sitecraw.py 
+	2. the origin code set the running port is 8000, you may change this port number use --port option
+		./sitecraw.py 
+		./sitecraw.py --port=8080
+
+
+	
