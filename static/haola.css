@@ -3306,3 +3306,6 @@ div.lra {
 	margin-top:15px;
 	margin-left:20px;
 }
+
+div#pg {margin-top:20px;}
+div#pg a {font-size:16px; padding:0 5px 0 5px;}

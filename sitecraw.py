@@ -25,6 +25,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", HomeHandler),
             (r"/s/([^/]+)", SearchHandler),
+            (r"/s/([^/]+)/([0-9]+)",SearchHandler),
             (r"/q/([^/]+)", QuestionHandler)
         ]
         settings = dict(
@@ -37,6 +38,7 @@ class Application(tornado.web.Application):
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
         self.title = None
+        self.query = ""
 
     def get_current_user(self):
         return None
@@ -125,14 +127,15 @@ class QuestionHandler(BaseHandler):
 
 class SearchHandler(BaseHandler):
     @tornado.web.asynchronous
-    def get(self, keyword=None):
+    def get(self, keyword=None, pn=0):
         if not keyword:
             #return
             self.redirect("/")
         else:
             self.keyword = keyword
             self.title = keyword
-            baidu = "http://zhidao.baidu.com/q?word=" + tornado.escape.url_escape(keyword) + "&ct=17&pn=0&tn=ikaslist&rn=10&lm=0"
+            self.query = keyword
+            baidu = "http://zhidao.baidu.com/q?word=" + tornado.escape.url_escape(keyword) + "&ct=17&tn=ikaslist&rn=15&lm=0&pn=" + str(pn)
             hc = tornado.httpclient.AsyncHTTPClient()
             hc.fetch(baidu, self._on_load)
 
@@ -144,14 +147,14 @@ class SearchHandler(BaseHandler):
             body = body.decode('gbk')
         except:
             pass
-        list,table = self._parse(body)
+        list,table,pg = self._parse(body)
         global static_keywords
         rand_keys = []
         for i in range(20):
             r = random.randint(0,len(static_keywords))
             rand_keys.append(static_keywords[r])
 
-        self.render("search.html", list=list,keyword=self.keyword, rkeys = rand_keys, rtable = table)
+        self.render("search.html", list=list,keyword=self.keyword, rkeys = rand_keys, rtable = table, pg=pg)
 
     def _parse(self,document):
         list = []
@@ -192,8 +195,23 @@ class SearchHandler(BaseHandler):
             try:
                 rtable = HTML.tostring(result[0].getparent().getparent().getparent(),encoding="utf-8")
             except:
-                pass
-        return alist, rtable
+                pass 
+
+        pagebar = doc.xpath("//div[@id='pg']")
+        pg = None
+        if pagebar:
+            links = pagebar[0].xpath(".//a")
+            for l in links:
+                olink = l.get("href").split("pn=")
+                plink = olink[1]
+                if plink == "0":
+                    l.set("href","/s/" + self.query)
+                else:
+                    l.set("href","/s/" + self.query + "/" + plink)
+
+            pg = HTML.tostring(pagebar[0], encoding="utf-8")
+
+        return alist, rtable, pg
 
 
 
