@@ -39,6 +39,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
         self.title = None
         self.query = ""
+        self.rkeys = []
 
     def get_current_user(self):
         return None
@@ -98,6 +99,7 @@ class QuestionHandler(BaseHandler):
         #get question
         q["title"] = qtitle.text_content()
         self.title = q["title"]
+        self.rkeys.append(self.title)
         q["body"] = qbody.text_content()
 
         anwsers = [None,None] #0 best anwser, 1 recommended anwser, 2-more other anwser
@@ -128,6 +130,7 @@ class QuestionHandler(BaseHandler):
 class SearchHandler(BaseHandler):
     @tornado.web.asynchronous
     def get(self, keyword=None, pn=0):
+        self.rkeys = []
         if not keyword:
             #return
             self.redirect("/")
@@ -135,6 +138,7 @@ class SearchHandler(BaseHandler):
             self.keyword = keyword
             self.title = keyword
             self.query = keyword
+            self.rkeys.append(keyword)
             baidu = "http://zhidao.baidu.com/q?word=" + tornado.escape.url_escape(keyword) + "&ct=17&tn=ikaslist&rn=15&lm=0&pn=" + str(pn)
             hc = tornado.httpclient.AsyncHTTPClient()
             hc.fetch(baidu, self._on_load)
@@ -186,6 +190,7 @@ class SearchHandler(BaseHandler):
                 a = rt.getchildren()[0]
                 a.set("href","/s/" + a.text_content())
                 kindex = -1
+                self.rkeys.append(a.text_content())
                 try:
                     kindex = static_keywords.index(a.text_content())
                 except:

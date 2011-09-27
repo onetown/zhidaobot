@@ -8,7 +8,7 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
   <meta content="en-us" http-equiv="Content-Language"/>
   <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, width=device-width" />
-  <meta name="keywords" content="haola.cc,搜搜,问问,健康,滋味,八卦, {%if handler.title%}{{handler.title}}{%end%}" />
+  <meta name="keywords" content="{%for k in handler.rkeys%}{{k}},{%end%} {%if handler.title%}{{handler.title}}{%end%}" />
   <!--[if IE 7]>
   <meta name="viewport" content="initial-scale=1.0, width=1024px"/>
   <![endif]-->
