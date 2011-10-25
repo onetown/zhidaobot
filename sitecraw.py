@@ -12,7 +12,7 @@ import tornado.httpclient
 import tornado.escape
 from tornado.options import define, options
 from lxml import html as HTML
-from lxml.html.soupparser import fromstring
+#from lxml.html.soupparser import fromstring
 from lxml.etree import tostring
 define("port", default=8000, help="run on the given port", type=int)
 define("keysfile", default="keys.txt")
@@ -190,7 +190,8 @@ class SearchHandler(BaseHandler):
                 a = rt.getchildren()[0]
                 a.set("href","/s/" + a.text_content())
                 kindex = -1
-                self.rkeys.append(a.text_content())
+                k = a.text_content().encode('utf-8')
+                self.rkeys.append(k)
                 try:
                     kindex = static_keywords.index(a.text_content())
                 except:
